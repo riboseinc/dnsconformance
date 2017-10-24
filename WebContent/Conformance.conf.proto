@@ -1,0 +1,56 @@
+Define OurIP 1.2.3.4
+Define OurFQDN your.domain.name
+Define OurDistDir /home/notreallyauser/dnsconformance
+Define OurCertsDir /etc/apache2/Certs
+
+ServerName ${OurFQDN}
+
+# 44317 is the port for marking up documents
+Listen ${OurIP}:44317
+
+<Directory "${OurDistDir}/WebContent">
+  AddHandler cgi-script py
+  Options ExecCGI FollowSymLinks
+
+  AuthName "Conformance"
+  AuthUserFile ${OurDistDir}/WebContent/userlist
+  AuthType Basic
+  AuthBasicProvider file
+  Require valid-user
+</Directory>
+
+<VirtualHost ${OurFQDN}:44317>
+  ServerName ${OurFQDN}
+  DocumentRoot "${OurDistDir}/WebContent"
+  ScriptAlias / "${OurDistDir}/WebContent/conformance.py/"
+  SSLEngine on
+  SSLCertificateFile ${OurCertsDir}/${OurFQDN}.cer
+  SSLCertificateKeyFile ${OurCertsDir}/${OurFQDN}.key
+  SSLProtocol -ALL +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:+HIGH:+MEDIUM
+</VirtualHost>
+
+# 44318 is the port for the console
+Listen ${OurIP}:44318
+
+<Directory "${OurDistDir}/Console">
+  AddHandler cgi-script py
+  Options ExecCGI FollowSymLinks
+
+  AuthName "Conformance Console"
+  AuthUserFile ${OurDistDir}/WebContent/userlist
+  AuthType Basic
+  AuthBasicProvider file
+  Require valid-user
+</Directory>
+
+<VirtualHost ${OurFQDN}:44318>
+  ServerName ${OurFQDN}
+  DocumentRoot "${OurDistDir}/Console"
+  ScriptAlias / "${OurDistDir}/Console/console.py/"
+  SSLEngine on
+  SSLCertificateFile ${OurCertsDir}/${OurFQDN}.cer
+  SSLCertificateKeyFile ${OurCertsDir}/${OurFQDN}.key
+  SSLProtocol -ALL +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:+HIGH:+MEDIUM
+</VirtualHost>

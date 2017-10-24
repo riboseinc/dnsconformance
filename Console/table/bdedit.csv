@@ -1,0 +1,14 @@
+# edit a base doc
+R,bdseqno,Seq No
+T,bdrfcno,RFC No
+E,bddoctype,Doc Type
+TL,bdname,Name
+K,bdtext,Text
+K,bderrata,Errata
+K,bdediff,Errata Diff
+E,bdthstat,Test Status
+K,bdcomment,Comment
+E,bddstat,Status
+R,bduser,User
+R,bdupdated,Updated
+R,bdadded,Added

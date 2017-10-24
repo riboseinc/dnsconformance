@@ -1,0 +1,13 @@
+# edit a requirement
+O,rseqno,Seq No
+T,bdseqno,Base doc seq
+T,rstart,Start
+T,rlength,Length
+K,rtext,Text
+E,rtype,Type
+K,rcomment,Comment
+T,rsameas,Same as
+T,rreplacedby,Replaced by
+O,ruser,User
+R,rupdated,Updated
+R,radded,Added

@@ -1,0 +1,98 @@
+A:link {color: #0000EF}
+A:visited {color: #0000EF}
+A:active {color: #FF0000}
+
+BODY { background-color: #FFFFFF;
+color: #000000;
+background-image: url(/static/bg.gif);
+}
+body, td, th, h1, h2 {font-family: sans-serif;}
+
+H1 { font-family: arial, helvetica, sans-serif; font-size: large;
+	font-weight: bold; text-align: center; }
+
+H2 { font-family: arial, helvetica, sans-serif; font-size: medium;
+	font-weight: bold; }
+
+P { font-family: arial, helvetica, sans-serif; font-size: 90%; }
+P.links { border:0; margin:0; text-align: center; }
+
+LI { font-family: arial, helvetica, sans-serif; font-size: 90%; margin-bottom: 0.5em; }
+
+.small { font-size: x-small; }
+
+/* navigation tabs */
+#tabnav
+	{
+		height: 20px;
+		margin: 0;
+		padding-left: 10px;
+		background: url(/static/tabfoot.gif) repeat-x bottom;
+	}
+
+#tabnav li
+	{
+		margin: 0; 
+		padding: 0;
+  		display: inline;
+  		list-style-type: none;
+  	}
+	
+#tabnav a:link, #tabnav a:visited
+	{
+		float: left;
+		background: #f3f3f3;
+		font-size: 11px;
+		line-height: 14px;
+		padding: 2px 10px 2px 10px;
+		margin-right: 4px;
+		border: 1px solid #ccc;
+		text-decoration: none;
+		color: #666;
+	}
+
+#tabnav a:link.active, #tabnav a:visited.active
+	{
+		border-bottom: 1px solid #fff;
+		background: #fff;
+		color: #000;
+	}
+
+#tabnav a:hover
+	{
+		background: #fff;
+	}
+
+/* tables */
+table {border-collapse: collapse;}
+.center {text-align: center;}
+.center table { margin-left: auto; margin-right: auto; text-align: left;}
+.center th { text-align: center !important; }
+.small { font-size: x-small; }
+
+/* header line */
+th.h {background-color: #9999cc; font-weight: bold; color: #000000;
+	 border: 1px solid #000000; font-size: 90%; vertical-align: center; padding: 5px; }
+/* entry title */
+td.e {background-color: #ccccff; font-weight: bold; color: #000000;
+	 border: 1px solid #000000; font-size: 90%; vertical-align: center; padding: 5px; }
+/* value */
+td.v {background-color: #cccccc; color: #000000;
+	border: 1px solid #000000; font-size: 90%; vertical-align: center; padding: 5px; }
+/* value with white background */
+td.w {background-color: #ffffff; color: #000000;
+	border: 1px solid #000000; font-size: 90%; vertical-align: center; padding: 5px; }
+/* grouping table */
+td.g { vertical-align: top; }
+
+/* for diff marking */
+div.add {
+        color: #00cc00;
+        display:inline;
+        font-weight: bold;
+}
+div.del {
+        color: #cc0000;
+        display:inline;
+        text-decoration: line-through;
+}

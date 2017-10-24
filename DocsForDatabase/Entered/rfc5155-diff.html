@@ -1,0 +1,57 @@
+<pre>183c183
+&lt;       [RFC4034], when the hashed owner names are in base32, encoded with
+---
+&gt;       [RFC4034], when the hashed owner names are in base32hex, encoded with
+214c214
+&lt;    Base32:  the "Base 32 Encoding with Extended Hex Alphabet" as
+---
+&gt;    base32hex:  the "Base 32 Encoding with Extended Hex Alphabet" as
+286c286
+&lt;    The owner name for the NSEC3 RR is the base32 encoding of the hashed
+---
+&gt;    The owner name for the NSEC3 RR is the base32hex encoding of the hashed
+408c408
+&lt;    The next hashed owner name is not base32 encoded, unlike the owner
+---
+&gt;    The next hashed owner name is not base32hex encoded, unlike the owner
+482c482
+&lt;       sequence of case-insensitive base32 digits, without whitespace.
+---
+&gt;       sequence of case-insensitive base32hex digits, without whitespace.
+822,824c822,830
+&lt;    The server MUST include the NSEC3 RR that matches QNAME.  This NSEC3
+&lt;    RR MUST NOT have the bits corresponding to either the QTYPE or CNAME
+&lt;    set in its Type Bit Maps field.
+---
+&gt;   If the No Data Response is a result of an empty non-terminal derived 
+&gt;   from an insecure delegation covered by an Opt-Out NSEC3 RR, the 
+&gt;   closest provable encloser proof MUST be included in the response.  
+&gt;   The included NSEC3 RR that covers the "next closer" name for the 
+&gt;   delegation MUST have the Opt-Out flag set to one. 
+&gt; 
+&gt;   In all other cases, the server MUST include the NSEC3 RR that matches 
+&gt;   QNAME.  This NSEC3 RR MUST NOT have the bits corresponding to either 
+&gt;   the QTYPE or CNAME set in its Type Bit Maps field.
+1067,1073c1073,1086
+&lt;    The validator MUST verify that an NSEC3 RR that matches QNAME is
+&lt;    present and that both the QTYPE and the CNAME type are not set in its
+&lt;    Type Bit Maps field.
+&lt; 
+&lt;    Note that this test also covers the case where the NSEC3 RR exists
+&lt;    because it corresponds to an empty non-terminal, in which case the
+&lt;    NSEC3 RR will have an empty Type Bit Maps field.
+---
+&gt;   If there is an NSEC3 RR that matches QNAME present, the validator must 
+&gt;   check that both the QTYPE and the CNAME type are not set in its Type 
+&gt;   Bit Maps field.
+&gt; 
+&gt;   Note that this test also covers the case where the NSEC3 RR exists
+&gt;   because it corresponds to an empty non-terminal, in which case the
+&gt;   NSEC3 RR will have an empty Type Bit Maps field.
+&gt; 
+&gt;   If there is no NSEC3 RR present that matches QNAME, then the validator 
+&gt;   MUST verify a closest provable encloser proof for the QNAME.  The 
+&gt;   validator MUST verify that the Opt-Out bit is set in the NSEC3 RR that 
+&gt;   covers the "next closer" name to the delegation name. This test covers 
+&gt;   the case where the response is due to an Empty Non-Terminal derived 
+&gt;   from an insecure delegation covered by an Opt-Out NSEC3 RR.</pre>

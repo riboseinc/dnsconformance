@@ -1,0 +1,10 @@
+<pre>2545c2545
+&lt;    example.com.           TXT  ( "v=spf1 "
+---
+&gt;    example.com.           SPF  ( "v=spf1 "
+2549,2550c2549,2550
+&lt;    ip4._spf.example.com.  TXT  "v=spf1 -ip4:192.0.2.0/24 +all"
+&lt;    ptr._spf.example.com.  TXT  "v=spf1 -ptr +all"
+---
+&gt;    ip4._spf.example.com.  SPF  "v=spf1 -ip4:192.0.2.0/24 +all"
+&gt;    ptr._spf.example.com.  SPF  "v=spf1 -ptr +all"</pre>

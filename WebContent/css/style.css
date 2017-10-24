@@ -1,0 +1,627 @@
+/*
+    HTML5 Reset :: style.css
+    ----------------------------------------------------------
+    We have learned much from/been inspired by/taken code where offered from:
+    
+    Eric Meyer                  :: http://ericmeyer.com
+    HTML5 Doctor                :: http://html5doctor.com
+    and the HTML5 Boilerplate   :: http://html5boilerplate.com
+    
+-------------------------------------------------------------------------------*/
+/* Let's default this puppy out
+-------------------------------------------------------------------------------*/
+html,
+body,
+body div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+  display: block;
+}
+/* Responsive images and other embedded objects
+   Note: keeping IMG here will cause problems if you're using foreground images as sprites.
+   If this default setting for images is causing issues, you might want to replace it with a .responsive class instead. */
+img,
+object,
+embed {
+  max-width: 100%;
+}
+/* force a vertical scrollbar to prevent a jumpy page */
+html {
+  overflow-y: scroll;
+}
+/* we use a lot of ULs that aren't bulleted. 
+    don't forget to restore the bullets within content. */
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+del {
+  text-decoration: line-through;
+}
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted #000;
+  cursor: help;
+}
+/* tables still need cellspacing="0" in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+th {
+  font-weight: bold;
+  vertical-align: bottom;
+}
+td {
+  font-weight: normal;
+  vertical-align: top;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+input,
+select {
+  vertical-align: middle;
+}
+pre {
+  white-space: pre;
+  /* CSS2 */
+  white-space: pre-wrap;
+  /* CSS 2.1 */
+  word-wrap: break-word;
+  /* IE */
+}
+input[type="radio"] {
+  vertical-align: text-bottom;
+}
+input[type="checkbox"] {
+  vertical-align: bottom;
+  *vertical-align: baseline;
+}
+.ie6 input {
+  vertical-align: text-bottom;
+}
+select,
+input,
+textarea {
+  font: 99% sans-serif;
+}
+table {
+  font-size: inherit;
+  font: 100%;
+}
+/* Accessible focus treatment
+    people.opera.com/patrickl/experiments/keyboard/test */
+a:hover,
+a:active {
+  outline: none;
+}
+small {
+  font-size: 85%;
+}
+strong,
+th {
+  font-weight: bold;
+}
+td,
+td img {
+  vertical-align: top;
+}
+/* Make sure sup and sub don't screw with your line-heights
+    gist.github.com/413930 */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+/* standardize any monospaced elements */
+pre,
+code,
+kbd,
+samp {
+  font-family: monospace, sans-serif;
+}
+/* hand cursor on clickable elements */
+.clickable,
+label,
+input[type=button],
+input[type=submit],
+button {
+  cursor: pointer;
+}
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+/* make buttons play nice in IE */
+button {
+  width: auto;
+  overflow: visible;
+}
+/* scale images in IE7 more attractively */
+.ie7 img {
+  -ms-interpolation-mode: bicubic;
+}
+/* let's clear some floats */
+.clearfix:before,
+.clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+/* Ok, this is where the fun starts.
+-------------------------------------------------------------------------------*/
+/* new Linux- and Windows-friendly sans-serif font stack: http://mky.be/fontstack */
+body {
+  font: 13px Helmet, Freesans, sans-serif;
+}
+/* using local fonts? make sure to read up on Paul Irish's 
+    Bulletproof @font-face syntax: http://mky.be/font-face/bulletproof/ */
+/* we like off-black for text */
+body,
+select,
+input,
+textarea {
+  color: #333;
+}
+a {
+  color: #435f7b;
+}
+a:hover {
+  color: #7292b2;
+}
+/* Custom text-selection colors (remove any text shadows: twitter.com/miketaylr/status/12228805301) */
+/*::-moz-selection{background: #fcd700; color: #fff; text-shadow: none;}
+::selection {background: #fcd700; color: #fff; text-shadow: none;} */
+/*  j.mp/webkit-tap-highlight-color */
+a:link {
+  -webkit-tap-highlight-color: #fcd700;
+}
+/*ins {background-color: #fcd700; color: #000; text-decoration: none;}
+mark {background-color: #fcd700; color: #000; font-style: italic; font-weight: bold;}*/
+/* ignore padding for box widths */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#container {
+  width: 100%;
+  height: 100%;
+  /* Disable selection so it doesn't get annoying */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#panelWrapper #panelLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 51px;
+  margin-right: 5px;
+  /* give space for scroll bar */
+}
+#panelWrapper #panelRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 71px;
+}
+#panelWrapper #panelHandle {
+  position: absolute;
+  left: -5px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  cursor: w-resize;
+  background-color: #aaaaaa;
+  border-left: 1px solid #919191;
+  border-right: 1px solid #c3c3c3;
+}
+.scPanel {
+  padding-top: 51px;
+}
+.navbar {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.modeSelector {
+  color: white;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+.rfcHeader {
+  background-color: #cbd7e3;
+  font-size: 1.4em;
+  padding: 15px;
+}
+.rfcHeader span {
+  display: block;
+  color: #666;
+  text-transform: uppercase;
+  line-height: 1.4em;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.identifier {
+  color: #666;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.rfcReqTests p,
+.rfcContents p {
+  margin-bottom: 1.4em;
+  line-height: 1.3em;
+}
+.rfcReqTests,
+.rfcContents {
+  padding: 15px;
+  overflow: scroll;
+}
+.rfcReqTests p {
+  margin-bottom: 0em;
+  font-size: .95em;
+}
+#rfcBack {
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.reqDetail,
+.testDetail {
+  background-color: #eee;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  padding: 10px;
+  margin-bottom: 3px;
+}
+.reqDetail {
+  background-color: #ddd;
+}
+h2 {
+  font-size: 1.4em;
+  margin-bottom: .4em;
+}
+table a {
+  text-decoration: underline;
+}
+pre {
+  color: #333;
+}
+span.singleSpan {
+  background-color: #d5f1d6;
+}
+span.doubleSpan {
+  background-color: #aee5b1;
+}
+span.singleSpan:hover {
+  cursor: pointer;
+}
+.input-auto {
+  width: auto;
+  display: inline-block;
+}
+#makeRequirement {
+  width: 170px;
+  background-color: #ddd;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  padding: 10px;
+  padding-bottom: 5px;
+  position: absolute;
+  left: -85px;
+  top: 200px;
+  border: 10px solid #aaaaaa;
+  border-left: 10px solid #919191;
+  border-right: 10px solid #c3c3c3;
+}
+#makeRequirement a {
+  display: block;
+  margin-bottom: 10px;
+}
+.btn-xxs {
+  padding: 0px 4px;
+  font-size: 11px;
+}
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal .modal-body {
+  overflow-y: auto;
+}
+.sideModals .modal {
+  width: 100%;
+}
+.sideModals .modal-dialog {
+  width: 50%;
+  padding: 0px;
+  position: absolute;
+  right: 0;
+  margin: 0;
+}
+.sideModals .modal-content {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 0;
+}
+.sideModals .modalLeftSide .modal-dialog {
+  left: 0;
+  right: auto;
+}
+#rfcTitle {
+  display: inline;
+}
+#rfcListing th:hover {
+  cursor: pointer;
+}
+#rfcComment {
+  display: none;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .05s linear;
+  -moz-transition: opacity .05s linear;
+  -ms-transition: opacity .05s linear;
+  -o-transition: opacity .05s linear;
+  transition: opacity .05s linear;
+}
+.modeSelector i.fa {
+  display: none;
+  font-size: .85em;
+}
+.modeSelector .active i.fa {
+  display: inline-block;
+}
+@-webkit-keyframes greenPulse {
+  from {
+    color: #D5F1D6;
+    text-shadow: 0 0 3px #89d78b;
+  }
+  50% {
+    color: #AEE5B1;
+    text-shadow: 0 0 3px #61cc67;
+  }
+  to {
+    color: #D5F1D6;
+    text-shadow: 0 0 3px #89d78b;
+  }
+}
+i.liteup {
+  color: #AEE5B1;
+  animation-name: greenPulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  margin-right: 5px;
+}
+.modal-backdrop.in {
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+.alert-no-testable {
+  background-color: #F8E894;
+  border-color: #E0CD69;
+  color: black;
+  border-radius: 0;
+  padding: 10px 15px;
+  display: none;
+  margin-bottom: 0px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.testDUT,
+.requirementSameAs,
+.testSameAs {
+  display: inline-block;
+  font-size: 11px;
+  background-color: #ddd;
+  padding: 8px 4px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  line-height: 0em;
+  position: relative;
+  top: -2px;
+  margin-left: 5px;
+  text-transform: lowercase;
+}
+textarea.form-control {
+  font-size: .9em;
+}
+p.requirementComment,
+.testOutcome,
+.testComment,
+.testMasterFile,
+.testLSCommand {
+  border-top: 1px solid #ccc;
+  margin-top: 5px;
+  padding-top: 5px;
+  margin-bottom: 5px;
+}
+/* Print styles!
+-------------------------------------------------------------------------------*/
+@media print {
+  a:after {
+    content: " ( " attr(href) " )";
+  }
+  #panelRight {
+    display: none;
+  }
+  #panelLeft {
+    width: 100% !important;
+  }
+  .rfcContents {
+    max-height: none !important;
+    height: auto !important;
+  }
+  .navbar,
+  .btn {
+    display: none;
+  }
+  .scPanel {
+    padding-top: 0px;
+  }
+  #panelWrapper #panelLeft {
+    padding-top: 0px;
+  }
+  #panelWrapper #panelRight {
+    padding-top: 0px;
+  }
+  .singleSpan,
+  .doubleSpan {
+    text-decoration: underline;
+  }
+  .doubleSpan {
+    border-bottom: 1px solid #000;
+  }
+}
+/* Media queries!
+-------------------------------------------------------------------------------*/
+/* Consider this: www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/ */

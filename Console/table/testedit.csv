@@ -1,0 +1,15 @@
+# edit a test
+O,tseqno,Seq No
+T,rseqno,Req seq
+T,tsameas,Same as
+K,ttext,Test
+E,tdut,DUT
+K,tlscommand,LS Command
+K,tmasterfile,Master file entry
+K,toutcome,Outcome
+E,tneg,Neg
+K,tcomment,Comment
+T,treplacedby,Replaced by
+O,tuser,User
+R,tupdated,Updated
+R,tadded,Added

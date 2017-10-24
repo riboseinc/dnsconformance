@@ -1,0 +1,1031 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head id="www-sitename-com" data-template-set="html5-reset">
+
+	<meta charset="utf-8">
+	
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!--  Mobile Viewport Fix
+	j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag 
+	device-width : Occupy full width of the screen in its current orientation
+	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		 
+	<link rel="apple-touch-icon" href="media/images/website_graphics/apple-touch-icon.png">
+	
+	<!-- CSS: screen, mobile & print are all in the same file -->
+    <script>
+    function loadCSS(e,t,n){"use strict";var r=window.document.createElement("link");var i=t||window.document.getElementsByTagName("script")[0];r.rel="stylesheet";r.href=e;r.media="only x";i.parentNode.insertBefore(r,i);setTimeout(function(){r.media=n||"all"})}
+    loadCSS("css/bootstrap.css");  
+    loadCSS("css/font-awesome.css");  
+    loadCSS("css/style.css");  
+    </script>
+    	
+	<!-- all our JS is at the bottom of the page, except for Modernizr. -->
+	<script src="js/modernizr-1.7.min.js"></script>
+
+</head>
+
+<body class="sideModals">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">         
+                            <li><a id="admin_new_document" class="admin_button" href="javascript:void(0);">New Document</a></li>
+                            <li><a id="admin_download_full_test_plan" class="admin_button" href="javascript:void(0);">Download Full Test Plan</a></li>
+                            <li><a id="admin_download_testable_only_test_plan" class="admin_button" href="javascript:void(0);">Download Testable-Only Test Plan</a></li>
+                            <li><a id="admin_download_db_json" class="admin_button" href="javascript:void(0);">Download Database as JSON</a></li>
+                            <li><a id="admin_help" class="admin_button" href="javascript:void(0);">Help</a></li>
+                        </ul>
+                    </li>
+                    <!-- We're not searching yet -->
+                    <!-- <li><a href="#"><i class="fa fa-search"></i> Search</a></li> -->
+                    <li><a href="javascript:void(0)" onClick="logout()"><i class="fa fa-sign-out"></i> Log Out (<span class="username"></span>)</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="index.htm"><i class="fa fa-arrow-left"></i> Docs</a></li>
+                    <li class="modeSelector" style="margin-top: 24px;">
+                        Mode: 
+                        <span class="modeIndicator"></span>
+                        <div class="btn-group hide">
+                            <button type="button" class="markupModeButton btn btn-sm btn-default"><i class="fa fa-circle liteup"></i>Markup</button>
+                            <button type="button" class="viewModeButton btn btn-sm btn-default active"><i class="fa fa-circle liteup"></i>View</button>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+<div id="panelWrapper">
+    <!-- Left side -->
+    <div id="panelLeft" class="scPanel">
+
+        <div class="rfcHeader">
+            <span id="rfcNumber"></span>
+            <div id="rfcTitle"></div> <a class="btn btn-xxs btn-default documentMDLink">metadata</a>
+            <div id="rfcComment"></div>
+        </div>
+        <div class="alert alert-success alert-no-testable" role="alert">No testable requirements</div>
+
+        <div class="rfcContents"></div>
+        
+    </div>
+    <!-- Right side -->
+    <div id="panelRight" class="scPanel">
+        <div id="panelHandle"></div> 
+        <div id="makeRequirement" style="display: none">
+            <a id="makeRequirementButton" href="javascript:void(0)" class="btn btn-primary btn-sm">Make Requirement</a>
+            <a id="cancelSelection" href="javascript:void(0)" class="btn btn-default btn-sm">Cancel</a>
+        </div>
+        <div id="reqDiv" class="rfcReqTests">
+            <!-- right side content start -->
+            <div class="reqDetail" style="display: none">
+                <h2>Requirement <span class="requirementNumber"></span> <span class="requirementSameAs"></span>
+                    <a class="btn btn-xxs btn-danger pull-right requirementDeleteLink">delete</a>
+                    <a class="btn btn-xxs btn-default pull-right requirementMDLink" style="margin-right: 5px">metadata</a>
+                    <a id="addTestButton" class="btn btn-xxs btn-default pull-right" style="margin-right: 5px">add test</a>
+                </h2>
+                <p class="requirementText"></p>
+                <p class="requirementComment"></p>
+                <div class="alert alert-success alert-no-testable requirementTypeNotice" role="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="makeRequirementModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Make Requirement</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Base Document ID</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_bdseqno" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Base Document Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_bdname" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Start Position</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_rstart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Length</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_rlength">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_rtext" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Requirement Type</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_rtype">
+                                <option value="None">None</option>
+                                <option value="Testable" selected>Testable</option>
+                                <option value="Format">Nontestable - message format</option>
+                                <option value="Operational">Nontestable - operational practices</option>
+                                <option value="HighVol">Nontestable - high volume</option>
+                                <option value="LongPeriod">Nontestable - long periods</option>
+                                <option value="FutureSpec">Nontestable - applies to future specifications</option>
+                                <option value="Procedural">Nontestable - procedural</option>
+                                <option value="Historic">Nontestable - historic</option>
+                                <option value="API">Nontestable - DNS API only</option>
+                                <option value="AppsAndPeople">Nontestable - Applications and people only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_rcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Replaced by requirement</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_rreplacedby">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_rsameas">
+                        </div>
+                    </div>
+                    <div class="form-group hide">
+                         <label for="" class="col-sm-3 control-label">Last user updating</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_ruser">
+                        </div>
+                    </div>
+                    <div class="form-group hide">
+                         <label for="" class="col-sm-3 control-label">Last updated</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_rupdated">
+                        </div>
+                    </div>
+                    <div class="form-group hide">
+                         <label for="" class="col-sm-3 control-label">Date added</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_radded">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="makeRequirementModalSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="documentMDModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Metadata for Document <span class="s_bdseqno">{s_bdseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Name</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdname">$$s_bdname$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Document Type</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bddoctype">$$s_bddoctype$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Report</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdreport">$$s_bdreport$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">RFC (if any)</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdrfcno">$$s_bdrfcno$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Notes</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bderrata">$$s_bderrata$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Diff</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdediff">$$s_bdediff$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Has Testable Requirements</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdthstat">$$s_bdthstat$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comments</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdcomment">$$s_bdcomment$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Status</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bddstat">$$s_bddstat$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last User Updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bduser">$$s_bduser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last Updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdupdated">$$s_bdupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Date Added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdadded">$$s_bdadded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="documentMDModalEditable" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Metadata for Document <span class="s_bdseqno">{s_bdseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_bdname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Document Type</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_bddoctype">
+                                <option value="None">None</option>
+                                <option value="RFC">RFC</option>
+                                <option value="TestPlan">Test Plan</option>
+                                <option value="RRtypeTemplate">RRtype Template</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Report</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdreport">$$s_bdreport$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">RFC (if any)</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_bdrfcno">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Notes</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_bderrata" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Diff</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_bdediff" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Has Testable Requirements</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_bdthstat">
+                                <option value="None">None</option>
+                                <option value="Testable">Testable</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comments</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_bdcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Status</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_bddstat">
+                                <option value="None">None</option>
+                                <option value="Active">Active</option>
+                                <option value="Removed">Removed</option>
+                                <option value="Replaced">Replaced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last User Updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bduser">$$s_bduser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last Updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdupdated">$$s_bdupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Date Added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_bdadded">$$s_bdadded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="documentMDModalEditableSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="requirementMDModal" class="modal fade modalLeftSide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Metadata for Requirement <span class="rseqno">{rseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Base document</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="bdseqno">$$bdseqno$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Start</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rstart">$$rstart$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Length</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rlength">$$rlength$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Type</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rtype">$$rtype$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rtext">$$rtext$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rcomment">$$rcomment$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Replaced by</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rreplacedby">$$rreplacedby$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rsameas">$$rsameas$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last user updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="ruser">$$ruser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rupdated">$$rupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="radded">$$radded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="requirementMDModalEditable" class="modal fade modalLeftSide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Metadata for Requirement <span class="rseqno">{rseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Start</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm rstart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Length</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm rlength">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Type</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm rtype">
+                                <option value="None">None</option>
+                                <option value="Testable" selected>Testable</option>
+                                <option value="Format">Nontestable - message format</option>
+                                <option value="Operational">Nontestable - operational practices</option>
+                                <option value="HighVol">Nontestable - high volume</option>
+                                <option value="LongPeriod">Nontestable - long periods</option>
+                                <option value="FutureSpec">Nontestable - applies to future specifications</option>
+                                <option value="Procedural">Nontestable - procedural</option>
+                                <option value="Historic">Nontestable - historic</option>
+                                <option value="API">Nontestable - DNS API only</option>
+                                <option value="AppsAndPeople">Nontestable - Applications and people only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm rtext" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm rcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Replaced by</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm rreplacedby">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm rsameas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last user updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="ruser">$$ruser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="rupdated">$$rupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="radded">$$radded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="requirementMDModalEditableSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="testMDModal" class="modal fade modalLeftSide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Metadata for Test ID <span class="s_tseqno">{s_tseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Base requirement ID</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_rseqno">$$s_rseqno$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_ttext">$$s_ttext$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">DUT</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tdut">$$s_tdut$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Outcome</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_toutcome">$$s_toutcome$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Negative</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_toutcome">$$s_tneg$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tcomment">$$s_tcomment$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Master file entry</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tmasterfile">$$s_tmasterfile$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">LS Command</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tlscommand">$$s_tlscommand$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Replaced by</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tsameas">$$tsameas$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tsameas">$$s_tsameas$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last user updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tuser">$$s_tuser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tupdated">$$s_tupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Date added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tadded">$$s_tadded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="testMDModalEditable" class="modal fade modalLeftSide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Metadata for Test ID <span class="s_tseqno">{s_tseqno}</span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9">
+                            <div class="form-control input-sm s_ttext" contenteditable="true" style="height: 120px;overflow-y: scroll;"></div>
+                            <!-- <textarea class="form-control input-sm s_ttext" rows="5"></textarea> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">DUT</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_tdut">
+                                <option value="None">None</option>
+                                <option value="Client" selected>Client</option>
+                                <option value="Server">Server</option>
+                                <option value="Masterfile">Master file</option>
+                                <option value="Caching">Caching server</option>
+                                <option value="Proxy">Proxy server</option>
+                                <option value="Recursive">Recursive resolver</option>
+                                <option value="StubResolv">Stub resolver</option>
+                                <option value="SecResolv">Security-aware resolver</option>
+                                <option value="SecStub">Security-aware stub</option>
+                                <option value="Validator">DNSSEC validating software</option>
+                                <option value="Signer">DNSSEC signing software</option>
+                                <option value="Any">Any implementation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Outcome</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_toutcome" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Negative</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_tneg">
+                                <option value="None" selected>None</option>
+                                <option value="Negative" selected>Negative test</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_tcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Master file entry</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_tmasterfile" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">LS Command</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm s_tlscommand" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Replaced by</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_treplacedby">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm s_tsameas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last user updating</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tuser">$$s_tuser$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Last updated</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tupdated">$$s_tupdated$$</span></p></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Date added</label>
+                         <div class="col-sm-9"><p class="form-control-static"><span class="s_tadded">$$s_tadded$$</span></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="testMDModalEditableSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="addTestModal" class="modal fade modalLeftSide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Test</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Base Requirement ID</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm c_rseqno" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Same as</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm c_tsameas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Text</label>
+                         <div class="col-sm-9">
+                            <div class="form-control input-sm c_ttext" contenteditable="true" style="height: 120px;overflow-y: scroll;"></div>
+                            <!-- <textarea class="form-control input-sm c_ttext" rows="5"></textarea> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">DUT is</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm c_tdut">
+                                <option value="None">None</option>
+                                <option value="Client" selected>Client</option>
+                                <option value="Server">Server</option>
+                                <option value="Masterfile">Master file</option>
+                                <option value="Caching">Caching server</option>
+                                <option value="Proxy">Proxy server</option>
+                                <option value="Recursive">Recursive resolver</option>
+                                <option value="StubResolv">Stub resolver</option>
+                                <option value="SecResolv">Security-aware resolver</option>
+                                <option value="SecStub">Security-aware stub</option>
+                                <option value="Validator">DNSSEC validating software</option>
+                                <option value="Signer">DNSSEC signing software</option>
+                                <option value="Any">Any implementation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Outcome</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_toutcome" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Negative</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm s_tneg">
+                                <option value="None" selected>None</option>
+                                <option value="Negative" selected>Negative test</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comment</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_tcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Master file command</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_tmasterfile" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">LS Command</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_tlscommand" rows="2"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="addTestModalSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Add Test</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="adminNewDocument" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span></button>
+                <h4 class="modal-title">New Document</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="alert alert-danger alert-select-document" role="alert" style="display: none;">Please select a file with the document text before continuing.</div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm c_bdname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Document Type</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm c_bddoctype">
+                                <option value="None">None</option>
+                                <option value="RFC">RFC</option>
+                                <option value="TestPlan">Test Plan</option>
+                                <option value="RRtypeTemplate">RRtype Template</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">RFC (if any)</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm c_bdrfcno">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Notes</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_bderrata" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Errata Diff</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_bdediff" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Has Testable Requirements</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm c_bdthstat">
+                                <option value="None">None</option>
+                                <option value="Testable">Testable</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Comments</label>
+                         <div class="col-sm-9">
+                            <textarea class="form-control input-sm c_bdcomment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">Status</label>
+                         <div class="col-sm-9">
+                            <select class="form-control input-sm c_bddstat">
+                                <option value="None">None</option>
+                                <option value="Active">Active</option>
+                                <option value="Removed">Removed</option>
+                                <option value="Replaced">Replaced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="exampleInputFile">Text</label>
+                        <div class="col-sm-9">
+                            <input type="file" id="exampleInputFile">
+                        </div>
+                    </div>
+                    <div class="form-group hide">
+                        <label class="col-sm-3 control-label" for="exampleInputFile">Result</label>
+                        <div class="col-sm-9">
+                            <textarea id="adminNewDocumentContent" class="form-control c_bdtext" rows="10"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="adminNewDocumentSubmit" class="btn btn-primary btn-sm" data-dismiss="modal">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="testDeleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Test</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete test <span class="tseqno"></span> whose text is:<br /><br /><span class="ttext"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="testDeleteModalSubmit" class="btn btn-danger btn-sm" data-dismiss="modal">Yes, Delete</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="requirementDeleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Requirement</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete requirement <span class="rseqno"></span> whose text is:<br /><br /><span class="rtext"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" id="requirementDeleteModalSubmit" class="btn btn-danger btn-sm" data-dismiss="modal">Yes, Delete</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="errorModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="downloadJSON" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Download Database as JSON</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">File Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm dloadJSONFileName">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <a id="dloadJSON" href="#" class="btn btn-default btn-sm" download="">Start Download</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="downloadFullTestPlan" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Download Full Test Plan</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">File Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm dloadFullTestPlanFileName">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <a id="dloadFullTestPlan" href="#" class="btn btn-default btn-sm" download="">Start Download</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="downloadTestableOnlyTestPlan" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Download Testable-Only Test Plan</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                         <label for="" class="col-sm-3 control-label">File Name</label>
+                         <div class="col-sm-9">
+                            <input type="text" class="form-control input-sm dloadTestableOnlyTestPlanFileName">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <a id="dloadTestableOnlyTestPlan" href="#" class="btn btn-default btn-sm" download="">Start Download</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- here comes the javascript -->
+
+<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+<script src="js/jquery-2.1.1.min.js"></script>
+
+<!-- this is where we put our custom functions -->
+<script src="js/bootstrap.js"></script>
+<script src="js/functions.js"></script>
+
+<script>
+$(function() {
+    // specific function calls for this page
+    initDocument();   // init document (for documents page)
+});
+</script>
+  
+</body>
+</html>
